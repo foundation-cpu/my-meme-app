@@ -1,17 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { init, webApp } from '@tma.js/sdk-react';
+import { init, postEvent } from '@tma.js/sdk';
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     try {
+      // Initialize the Telegram SDK
       init();
-      if (webApp.isSupported()) {
-        webApp.expand();
-      }
+
+      // Expand the Mini App to full screen height inside Telegram
+      postEvent('web_app_expand');
+
       setIsLoaded(true);
     } catch (e) {
       console.error('Failed to initialize Telegram WebApp SDK:', e);
